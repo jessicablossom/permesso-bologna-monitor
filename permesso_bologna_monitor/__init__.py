@@ -1,0 +1,1 @@
+"""Permesso Bologna monitor package."""

@@ -1,0 +1,93 @@
+# permesso-bologna-monitor
+
+Daily monitor that checks whether a permesso di soggiorno is ready for pickup
+at Questura Bologna and sends the result by email.
+
+The check uses the public Questura Bologna form:
+https://www.questura.bologna.it/node/2
+
+## Local Usage
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+cp .env.example .env
+python -m permesso_bologna_monitor
+```
+
+Fill `.env` with your data before running the monitor.
+
+## GitHub Actions Secrets
+
+Configure these secrets in `Settings -> Secrets and variables -> Actions`:
+
+| Secret | Required | Description |
+|--------|-----------|-------------|
+| `QUESTURA_PRACTICE_CODE` | Yes | Practice code, for example `08BO012345` |
+| `QUESTURA_BIRTH_DATE` | Yes | Birth date in `dd/mm/yyyy` or `dd-mm-yyyy` format |
+| `SMTP_USER` | Yes | Sender email |
+| `SMTP_PASSWORD` | Yes | SMTP app password |
+| `NOTIFY_EMAIL` | No | Recipient email; defaults to `SMTP_USER` |
+
+The `Permesso Bologna Monitor` workflow runs every day at 08:00
+`Europe/Rome` by using UTC cron entries plus a time gate inside the job. It can
+also be run manually from GitHub Actions.
+
+## Result
+
+An email is always sent:
+
+- positive when the permit appears ready for pickup;
+- negative when Questura reports that it is not ready yet;
+- unknown when the page changes or returns unexpected text.
+
+## Italiano
+
+Monitor giornaliero per verificare se il permesso di soggiorno e pronto per il
+ritiro presso la Questura di Bologna e inviare il risultato via email.
+
+La verifica usa il modulo pubblico della Questura di Bologna:
+https://www.questura.bologna.it/node/2
+
+### Uso Locale
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+cp .env.example .env
+python -m permesso_bologna_monitor
+```
+
+Compila `.env` con i tuoi dati prima di eseguire il monitor.
+
+### Secret Di GitHub Actions
+
+Configura questi secret in `Settings -> Secrets and variables -> Actions`:
+
+| Secret | Obbligatorio | Descrizione |
+|--------|--------------|-------------|
+| `QUESTURA_PRACTICE_CODE` | Si | Codice pratica, per esempio `08BO012345` |
+| `QUESTURA_BIRTH_DATE` | Si | Data di nascita nel formato `dd/mm/yyyy` o `dd-mm-yyyy` |
+| `SMTP_USER` | Si | Email mittente |
+| `SMTP_PASSWORD` | Si | Password applicativa SMTP |
+| `NOTIFY_EMAIL` | No | Email destinatario; se assente usa `SMTP_USER` |
+
+Il workflow `Permesso Bologna Monitor` viene eseguito ogni giorno alle 08:00
+`Europe/Rome` usando cron UTC con un controllo orario nel job. Puo anche essere
+avviato manualmente da GitHub Actions.
+
+### Risultato
+
+Viene sempre inviata una email:
+
+- positiva quando il permesso risulta pronto per il ritiro;
+- negativa quando la Questura indica che non e ancora pronto;
+- sconosciuta quando la pagina cambia o restituisce un testo inatteso.
+
+## Tests
+
+```bash
+python -m unittest discover -s tests -v
+```
