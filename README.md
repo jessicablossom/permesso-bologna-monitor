@@ -35,7 +35,7 @@ Configure these secrets in `Settings -> Secrets and variables -> Actions`:
 | `SMTP_PASSWORD` | Yes | SMTP app password |
 | `NOTIFY_EMAIL` | No | Recipient email; defaults to `SMTP_USER` |
 
-The `Permesso Bologna Monitor` workflow runs every day at 08:00
+The `Permesso Bologna Monitor` workflow runs every day at 09:00
 `Europe/Rome` by using UTC cron entries plus a time gate inside the job. It can
 also be run manually from GitHub Actions.
 
@@ -85,7 +85,7 @@ Configura questi secret in `Settings -> Secrets and variables -> Actions`:
 | `SMTP_PASSWORD` | Si | Password applicativa SMTP |
 | `NOTIFY_EMAIL` | No | Email destinatario; se assente usa `SMTP_USER` |
 
-Il workflow `Permesso Bologna Monitor` viene eseguito ogni giorno alle 08:00
+Il workflow `Permesso Bologna Monitor` viene eseguito ogni giorno alle 09:00
 `Europe/Rome` usando cron UTC con un controllo orario nel job. Puo anche essere
 avviato manualmente da GitHub Actions.
 
