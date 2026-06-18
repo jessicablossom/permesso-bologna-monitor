@@ -15,10 +15,6 @@ FIELD_SUBMIT = "op"
 
 QUESTURA_SUBMIT_VALUE = "Prenota il ritiro"
 QUESTURA_NOT_READY_MESSAGE = (
-    "Non e pronto alcun permesso di soggiorno corrispondente ai dati inseriti."
-)
-QUESTURA_READY_MESSAGES = (
-    "Il permesso di soggiorno e pronto per il ritiro",
-    "permesso di soggiorno pronto per il ritiro",
-    "puoi ritirare il permesso di soggiorno",
+    "Non è pronto alcun permesso di soggiorno corrispondente ai dati inseriti. "
+    "Verifica i dati e riprova fra qualche giorno."
 )

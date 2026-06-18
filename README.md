@@ -1,9 +1,14 @@
 # permesso-bologna-monitor
 
-Daily monitor that checks whether a permesso di soggiorno is ready for pickup
-at Questura Bologna and sends the result by email.
+Daily monitor for an already-started permesso di soggiorno procedure. It checks
+whether the pickup notice is ready at Questura Bologna and sends the result by
+email.
 
-The check uses the public Questura Bologna form:
+This project does not request a permesso di soggiorno, manage an application,
+book appointments, or contact Questura. It only tracks the public pickup-status
+page after the procedure has already been started.
+
+The check uses the public Questura Bologna status page:
 https://www.questura.bologna.it/node/2
 
 ## Local Usage
@@ -38,16 +43,22 @@ also be run manually from GitHub Actions.
 
 An email is always sent:
 
-- positive when the permit appears ready for pickup;
-- negative when Questura reports that it is not ready yet;
-- unknown when the page changes or returns unexpected text.
+- negative when Questura shows the confirmed "not ready" message;
+- unknown for any other response, including a possible ready-for-pickup message,
+  because the positive text has not been confirmed yet.
 
 ## Italiano
 
-Monitor giornaliero per verificare se il permesso di soggiorno e pronto per il
-ritiro presso la Questura di Bologna e inviare il risultato via email.
+Monitor giornaliero per una pratica di permesso di soggiorno gia avviata.
+Verifica se l'avviso per il ritiro e disponibile presso la Questura di Bologna
+e invia il risultato via email.
 
-La verifica usa il modulo pubblico della Questura di Bologna:
+Questo progetto non richiede un permesso di soggiorno, non gestisce una pratica,
+non prenota appuntamenti e non contatta la Questura. Serve solo a controllare la
+pagina pubblica dello stato di ritiro dopo che la pratica e gia stata avviata.
+
+La verifica usa la pagina pubblica dello stato di ritiro della Questura di
+Bologna:
 https://www.questura.bologna.it/node/2
 
 ### Uso Locale
@@ -82,9 +93,9 @@ avviato manualmente da GitHub Actions.
 
 Viene sempre inviata una email:
 
-- positiva quando il permesso risulta pronto per il ritiro;
-- negativa quando la Questura indica che non e ancora pronto;
-- sconosciuta quando la pagina cambia o restituisce un testo inatteso.
+- negativa quando la Questura mostra il messaggio confermato di "non pronto";
+- sconosciuta per qualsiasi altra risposta, incluso un possibile messaggio di
+  disponibilita al ritiro, perche il testo positivo non e ancora confermato.
 
 ## Tests
 

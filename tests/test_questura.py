@@ -88,11 +88,20 @@ class QuesturaTests(unittest.TestCase):
         self.assertEqual(payload["dnm"], "02")
         self.assertEqual(payload["dna"], "1980")
 
-    def test_classify_response_handles_accents(self) -> None:
+    def test_classify_response_matches_confirmed_not_ready_message(self) -> None:
+        status, detail = classify_response(
+            "Non è pronto alcun permesso di soggiorno corrispondente ai dati "
+            "inseriti. Verifica i dati e riprova fra qualche giorno."
+        )
+
+        self.assertEqual(status, QuesturaStatus.NOT_READY)
+        self.assertIn("not appear ready", detail)
+
+    def test_classify_response_keeps_unconfirmed_ready_text_unknown(self) -> None:
         status, detail = classify_response("Il permesso di soggiorno e pronto per il ritiro")
 
-        self.assertEqual(status, QuesturaStatus.READY)
-        self.assertIn("ready", detail)
+        self.assertEqual(status, QuesturaStatus.UNKNOWN)
+        self.assertIn("Unrecognized", detail)
 
     def test_check_permesso_posts_form_and_returns_result(self) -> None:
         form_html = f"""
@@ -100,12 +109,15 @@ class QuesturaTests(unittest.TestCase):
             <input name="form_build_id" value="abc">
         </form>
         """
-        result_html = "<main>Il permesso di soggiorno e pronto per il ritiro</main>"
+        result_html = (
+            "<main>Non è pronto alcun permesso di soggiorno corrispondente ai dati "
+            "inseriti. Verifica i dati e riprova fra qualche giorno.</main>"
+        )
         session = FakeSession(form_html, result_html)
 
         result = check_permesso(make_settings(), session=session)
 
-        self.assertEqual(result.status, QuesturaStatus.READY)
+        self.assertEqual(result.status, QuesturaStatus.NOT_READY)
         self.assertEqual(session.post_url, "https://www.questura.bologna.it/result")
         self.assertEqual(session.post_data["codpratica"], "08BO012345")
 

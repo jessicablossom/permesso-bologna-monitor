@@ -18,7 +18,6 @@ from permesso_bologna_monitor.constants import (
     FIELD_SUBMIT,
     QUESTURA_FORM_ID,
     QUESTURA_NOT_READY_MESSAGE,
-    QUESTURA_READY_MESSAGES,
     QUESTURA_SUBMIT_VALUE,
     REQUEST_TIMEOUT_SECONDS,
     USER_AGENT,
@@ -164,10 +163,6 @@ def classify_response(response_text: str) -> tuple[QuesturaStatus, str]:
     normalized = normalize_for_match(response_text)
     if normalize_for_match(QUESTURA_NOT_READY_MESSAGE) in normalized:
         return QuesturaStatus.NOT_READY, "The permit does not appear ready yet."
-
-    for message in QUESTURA_READY_MESSAGES:
-        if normalize_for_match(message) in normalized:
-            return QuesturaStatus.READY, "The permit appears ready for pickup."
 
     return QuesturaStatus.UNKNOWN, "Unrecognized response; check manually."
 
