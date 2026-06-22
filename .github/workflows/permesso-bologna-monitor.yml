@@ -2,9 +2,8 @@ name: Permesso Bologna Monitor
 
 on:
   schedule:
-    # GitHub cron uses UTC. 07:00/08:00 UTC cover 09:00 in Rome
-    # during daylight saving time and standard time; the job gates below.
-    - cron: "0 7,8 * * *"
+    - cron: "0 9 * * *"
+      timezone: Europe/Rome
   workflow_dispatch:
 
 concurrency:
@@ -33,24 +32,7 @@ jobs:
       - name: Run tests
         run: python -m unittest discover -s tests -v
 
-      - name: Confirm scheduled time
-        id: schedule_gate
-        run: |
-          if [ "${{ github.event_name }}" != "schedule" ]; then
-            echo "should_run=true" >> "$GITHUB_OUTPUT"
-            exit 0
-          fi
-
-          current_hour="$(TZ=Europe/Rome date +%H)"
-          if [ "$current_hour" = "09" ]; then
-            echo "should_run=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "should_run=false" >> "$GITHUB_OUTPUT"
-            echo "Skipping run: current time in Rome is ${current_hour}:00."
-          fi
-
       - name: Validate secrets
-        if: steps.schedule_gate.outputs.should_run == 'true'
         env:
           SMTP_USER: ${{ secrets.SMTP_USER }}
           SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
@@ -68,7 +50,6 @@ jobs:
           fi
 
       - name: Check Questura Bologna
-        if: steps.schedule_gate.outputs.should_run == 'true'
         env:
           SMTP_USER: ${{ secrets.SMTP_USER }}
           SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}

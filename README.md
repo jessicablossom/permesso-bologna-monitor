@@ -36,8 +36,8 @@ Configure these secrets in `Settings -> Secrets and variables -> Actions`:
 | `NOTIFY_EMAIL` | No | Recipient email; defaults to `SMTP_USER` |
 
 The `Permesso Bologna Monitor` workflow runs every day at 09:00
-`Europe/Rome` by using UTC cron entries plus a time gate inside the job. It can
-also be run manually from GitHub Actions.
+`Europe/Rome` using a timezone-aware GitHub Actions cron schedule. It can also
+be run manually from GitHub Actions.
 
 ## Result
 
@@ -86,8 +86,8 @@ Configura questi secret in `Settings -> Secrets and variables -> Actions`:
 | `NOTIFY_EMAIL` | No | Email destinatario; se assente usa `SMTP_USER` |
 
 Il workflow `Permesso Bologna Monitor` viene eseguito ogni giorno alle 09:00
-`Europe/Rome` usando cron UTC con un controllo orario nel job. Puo anche essere
-avviato manualmente da GitHub Actions.
+`Europe/Rome` con uno schedule cron di GitHub Actions con timezone. Puo anche
+essere avviato manualmente da GitHub Actions.
 
 ### Risultato
 
