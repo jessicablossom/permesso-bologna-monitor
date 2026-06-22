@@ -35,9 +35,14 @@ Configure these secrets in `Settings -> Secrets and variables -> Actions`:
 | `SMTP_PASSWORD` | Yes | SMTP app password |
 | `NOTIFY_EMAIL` | No | Recipient email; defaults to `SMTP_USER` |
 
-The `Permesso Bologna Monitor` workflow runs every day at 09:00
-`Europe/Rome` using a timezone-aware GitHub Actions cron schedule. It can also
-be run manually from GitHub Actions.
+The `Permesso Bologna Monitor` workflow tries to run once every day around
+09:00 `Europe/Rome`. GitHub scheduled workflows can be delayed or skipped, so
+the workflow uses several morning UTC cron slots and sends at most one email per
+Rome calendar day. It can also be run manually from GitHub Actions.
+
+If scheduled runs still do not fire reliably, use an external cron service such
+as [cron-job.org](https://cron-job.org) to trigger the workflow daily via the
+GitHub API `workflow_dispatch` endpoint.
 
 ## Result
 
@@ -85,9 +90,15 @@ Configura questi secret in `Settings -> Secrets and variables -> Actions`:
 | `SMTP_PASSWORD` | Si | Password applicativa SMTP |
 | `NOTIFY_EMAIL` | No | Email destinatario; se assente usa `SMTP_USER` |
 
-Il workflow `Permesso Bologna Monitor` viene eseguito ogni giorno alle 09:00
-`Europe/Rome` con uno schedule cron di GitHub Actions con timezone. Puo anche
-essere avviato manualmente da GitHub Actions.
+Il workflow `Permesso Bologna Monitor` prova a eseguire un controllo al giorno
+intorno alle 09:00 `Europe/Rome`. Gli schedule di GitHub Actions possono
+arrivare in ritardo o non partire, quindi il workflow usa piu slot UTC mattutini
+e invia al massimo una email per giorno di calendario di Roma. Puo anche essere
+avviato manualmente da GitHub Actions.
+
+Se gli schedule automatici restano poco affidabili, usa un servizio esterno come
+[cron-job.org](https://cron-job.org) per avviare il workflow ogni giorno tramite
+l'endpoint GitHub API `workflow_dispatch`.
 
 ### Risultato
 
